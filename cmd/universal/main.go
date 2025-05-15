@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/anddm2001/go-mcp-universal/internal/tools"
 	"log"
+
+	"github.com/anddm2001/go-mcp-universal/pkg/tools"
 
 	"github.com/mark3labs/mcp-go/server"
 )

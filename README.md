@@ -9,7 +9,53 @@
 - Диагностика pprof (heap, goroutine)
 - AI-инструмент (заглушка, можно расширить)
 
----
+## Установка
+
+```bash
+go get github.com/anddm2001/go-mcp-universal
+```
+
+## Использование в своём приложении
+
+```go
+import (
+    "github.com/mark3labs/mcp-go/server"
+    "github.com/anddm2001/go-mcp-universal/pkg/tools"
+)
+
+func main() {
+    // ... инициализация вашего приложения
+
+    // Запуск MCP сервера в отдельной горутине
+    go func() {
+        s := server.NewMCPServer("my-app", "0.1.0")
+        tools.RegisterRuntimeTools(s)
+        tools.RegisterEnvTools(s)
+        tools.RegisterTestTools(s)
+        tools.RegisterPprofTools(s)
+        tools.RegisterAITools(s)
+        server.ServeStdio(s)
+    }()
+
+    // ... основной цикл приложения
+}
+```
+
+## Структура проекта
+
+```
+go-mcp-universal/
+├── cmd/
+│   └── universal/        # Пример использования как отдельного приложения
+├── pkg/
+│   └── tools/           # Публичные инструменты для использования в других приложениях
+│       ├── runtime.go   # Инструменты для работы с горутинами
+│       ├── env.go       # Инструменты для работы с переменными окружения
+│       ├── tests.go     # Инструменты для запуска тестов
+│       ├── pprof.go     # Инструменты для pprof
+│       └── ai.go        # AI-инструменты
+└── examples/            # Примеры использования
+```
 
 ## Способы запуска
 
@@ -48,7 +94,7 @@ package main
 
 import (
     "github.com/mark3labs/mcp-go/server"
-    "go-mcp-universal/internal/tools"
+    "github.com/anddm2001/go-mcp-universal/pkg/tools"
     // ... ваш код
 )
 
@@ -93,7 +139,7 @@ import (
     "os/exec"
     "log"
     "github.com/mark3labs/mcp-go/server"
-    "go-mcp-universal/internal/tools"
+    "github.com/anddm2001/go-mcp-universal/pkg/tools"
 )
 
 func main() {
@@ -134,7 +180,7 @@ func main() {
 
 ## Расширение AI-инструмента
 
-В файле `internal/tools/ai.go` реализован заглушечный инструмент. Вы можете заменить его на интеграцию с любым LLM (OpenAI, локальный LLM и т.д.).
+В файле `pkg/tools/ai.go` реализован заглушечный инструмент. Вы можете заменить его на интеграцию с любым LLM (OpenAI, локальный LLM и т.д.).
 
 ---
 
